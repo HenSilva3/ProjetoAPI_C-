@@ -11,6 +11,10 @@ public class ControleAcessoContex : DbContext
     }
     public DbSet<Acesso> Acessos { get; set; }
 
-    public DbSet<Pessoa> Saidas { get; set; }
+    public DbSet<Pessoa> Pessoas { get; set; }
+
+   
+
+   
 
 }

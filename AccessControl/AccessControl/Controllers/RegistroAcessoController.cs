@@ -1,4 +1,5 @@
-﻿using AccessControl.Models;
+﻿using AccessControl.Data;
+using AccessControl.Models;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -8,52 +9,63 @@ namespace AccessControl.Controllers;
 [Route("[controller]")]
 public class RegistroAcessoController : ControllerBase
 {
-    private static List<Acesso> acessos = new List<Acesso>();
+    private ControleAcessoContex _context;
+
+    public RegistroAcessoController(ControleAcessoContex context)
+    {
+        _context = context;
+    }
 
     [HttpPost]
     public IActionResult RegistraEntrada(Acesso acesso)
     {
-        acessos.Add(acesso);
+        _context.Acessos.Add(acesso);
+        _context.SaveChanges();
         return CreatedAtAction(nameof(RecuperaAcessoPorDocumento), new { documento = acesso.Documento }, acesso);
     }
 
     [HttpGet]
     public IEnumerable<Acesso> RetornaAcessos([FromQuery] int skip = 0, [FromQuery] int take = 50)
     {
-        return acessos.Skip(skip).Take(take);
+        return _context.Acessos.Skip(skip).Take(take);
     }
 
     [HttpGet("{documento}")]
     public IEnumerable<Acesso> RecuperaAcessoPorDocumento(string documento)
     {
-        return acessos.Where(acesso => acesso.Documento == documento);
+        return _context.Acessos.Where(acesso => acesso.Documento == documento);
 
     }
 }
 
 [ApiController]
 [Route("[controller]")]
-public class RegistropessoaController : ControllerBase
+public class RegistroPessoaController : ControllerBase
 {
-    private static List<Pessoa> pessoas = new List<Pessoa>();
+    private ControleAcessoContex _context;
+
+    public RegistroPessoaController(ControleAcessoContex contex)
+    {
+        _context = contex;
+    }
 
     [HttpPost]
     public IActionResult RegistraEntrada(Pessoa pessoa)
     {
-        pessoas.Add(pessoa);
-        return CreatedAtAction(nameof(RecuperaPessoaPorDocumento), new { documento = pessoa.Documento }, pessoa);
+        _context.Pessoas.Add(pessoa);
+        return CreatedAtAction(nameof(RecuperaPessoaPorDocumento), new { documento = pessoa.Documento }, pess);
     }
 
     [HttpGet]
     public IEnumerable<Pessoa> RetornaAcessos([FromQuery] int skip = 0, [FromQuery] int take = 50)
     {
-        return pessoas.Skip(skip).Take(take);
+        return _context.Pessoas.Skip(skip).Take(take);
     }
 
     [HttpGet("{documento}")]
     public IActionResult RecuperaPessoaPorDocumento(string documento)
     {
-        var pes = pessoas.FirstOrDefault(pessoa => pessoa.Documento == documento);
+        var pes = _context.Pessoas.FirstOrDefault(pessoa => pessoa.Documento == documento);
         if (pes == null) return NotFound();
         return Ok(pes);
 
