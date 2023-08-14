@@ -9,7 +9,7 @@ public class Acesso
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int IdDeAcesso { get; set; }
 
-    [Required(ErrorMessage = "Documento é obrigatório")]
+    [ForeignKey("Documento")]
     public string Documento { get; set; }
 
     [Required(ErrorMessage = "O nome é obrigatório")]

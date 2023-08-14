@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using System.ComponentModel.DataAnnotations;
 
 namespace AccessControl.Models;
 
@@ -12,7 +13,9 @@ public class Pessoa
     [MaxLength(20, ErrorMessage = "O tamanho do nome não pode exceder 20 caracteres")]
     public string Nome { get; set; }
 
-    [Required(ErrorMessage = "A categoria é obrigadotória (Colaborador = 1, Prestador = 2 ou Visitante = 3)")]
-    public int Categoria { get; set; }  
+    [Required(ErrorMessage = "A categoria é obrigadotória")]   
+    public string Categoria { get; set; }
 
-}
+    
+
+    }

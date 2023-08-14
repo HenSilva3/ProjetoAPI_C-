@@ -21,4 +21,37 @@ public class RegistroAcessoController : ControllerBase
     {
         return Ok(acessos);
     }
+
+    [HttpGet("{documento}")]
+    public IEnumerable<Acesso> RecuperaAcessoPorDocumento(string documento)
+    {
+        return acessos.Where(acesso => acesso.Documento == documento);
+
+    }
+}
+
+[ApiController]
+[Route("[controller]")]
+public class RegistropessoaController : ControllerBase
+{
+    private static List<Pessoa> pessoas = new List<Pessoa>();
+
+    [HttpPost]
+    public void RegistraEntrada(Pessoa pessoa)
+    {
+        pessoas.Add(pessoa);
+    }
+
+    [HttpGet]
+    public ActionResult<IEnumerable<Pessoa>> RetornaAcessos()
+    {
+        return Ok(pessoas);
+    }
+
+    [HttpGet("{documento}")]
+    public IEnumerable<Pessoa> RecuperaPessoaPorDocumento(string documento)
+    {
+        return pessoas.Where(pessoa => pessoa.Documento == documento);
+
+    }
 }
