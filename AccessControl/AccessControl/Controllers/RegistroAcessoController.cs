@@ -11,15 +11,16 @@ public class RegistroAcessoController : ControllerBase
     private static List<Acesso> acessos = new List<Acesso>();
 
     [HttpPost]
-    public void RegistraEntrada(Acesso acesso)
+    public IActionResult RegistraEntrada(Acesso acesso)
     {
         acessos.Add(acesso);
+        return CreatedAtAction(nameof(RecuperaAcessoPorDocumento), new { documento = acesso.Documento }, acesso);
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Acesso>> RetornaAcessos()
+    public IEnumerable<Acesso> RetornaAcessos([FromQuery] int skip = 0, [FromQuery] int take = 50)
     {
-        return Ok(acessos);
+        return acessos.Skip(skip).Take(take);
     }
 
     [HttpGet("{documento}")]
@@ -37,21 +38,24 @@ public class RegistropessoaController : ControllerBase
     private static List<Pessoa> pessoas = new List<Pessoa>();
 
     [HttpPost]
-    public void RegistraEntrada(Pessoa pessoa)
+    public IActionResult RegistraEntrada(Pessoa pessoa)
     {
         pessoas.Add(pessoa);
+        return CreatedAtAction(nameof(RecuperaPessoaPorDocumento), new { documento = pessoa.Documento }, pessoa);
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Pessoa>> RetornaAcessos()
+    public IEnumerable<Pessoa> RetornaAcessos([FromQuery] int skip = 0, [FromQuery] int take = 50)
     {
-        return Ok(pessoas);
+        return pessoas.Skip(skip).Take(take);
     }
 
     [HttpGet("{documento}")]
-    public IEnumerable<Pessoa> RecuperaPessoaPorDocumento(string documento)
+    public IActionResult RecuperaPessoaPorDocumento(string documento)
     {
-        return pessoas.Where(pessoa => pessoa.Documento == documento);
+        var pes = pessoas.FirstOrDefault(pessoa => pessoa.Documento == documento);
+        if (pes == null) return NotFound();
+        return Ok(pes);
 
     }
 }
