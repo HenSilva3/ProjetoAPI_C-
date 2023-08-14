@@ -53,6 +53,7 @@ public class RegistroPessoaController : ControllerBase
     public IActionResult RegistraEntrada(Pessoa pessoa)
     {
         _context.Pessoas.Add(pessoa);
+        _context.SaveChanges();
         return CreatedAtAction(nameof(RecuperaPessoaPorDocumento), new { documento = pessoa.Documento }, pessoa);
     }
 
