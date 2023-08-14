@@ -53,7 +53,7 @@ public class RegistroPessoaController : ControllerBase
     public IActionResult RegistraEntrada(Pessoa pessoa)
     {
         _context.Pessoas.Add(pessoa);
-        return CreatedAtAction(nameof(RecuperaPessoaPorDocumento), new { documento = pessoa.Documento }, pess);
+        return CreatedAtAction(nameof(RecuperaPessoaPorDocumento), new { documento = pessoa.Documento }, pessoa);
     }
 
     [HttpGet]
