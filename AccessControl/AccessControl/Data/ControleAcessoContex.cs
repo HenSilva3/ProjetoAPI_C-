@@ -13,8 +13,8 @@ public class ControleAcessoContex : DbContext
 
     public DbSet<Pessoa> Pessoas { get; set; }
 
-   
+    
 
-   
+
 
 }

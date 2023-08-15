@@ -19,9 +19,11 @@ public class RegistroAcessoController : ControllerBase
     [HttpPost]
     public IActionResult RegistraEntrada(Acesso acesso)
     {
+        
         _context.Acessos.Add(acesso);
         _context.SaveChanges();
         return CreatedAtAction(nameof(RecuperaAcessoPorDocumento), new { documento = acesso.Documento }, acesso);
+
     }
 
     [HttpGet]
@@ -50,8 +52,9 @@ public class RegistroPessoaController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult RegistraEntrada(Pessoa pessoa)
+    public IActionResult RegistraPessoa(Pessoa pessoa)
     {
+
         _context.Pessoas.Add(pessoa);
         _context.SaveChanges();
         return CreatedAtAction(nameof(RecuperaPessoaPorDocumento), new { documento = pessoa.Documento }, pessoa);
