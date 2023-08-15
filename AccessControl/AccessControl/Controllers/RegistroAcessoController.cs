@@ -42,6 +42,17 @@ public class RegistraAcessoController : ControllerBase
         return _context.Acessos.Where(acesso => acesso.Documento == documento);
 
     }
+
+    [HttpPut("{idDeAcesso}")]
+    public IActionResult AtualizaAcesso(int idDeAcesso, [FromBody] UpdateAcessoDto acessoDto)
+    {
+        var acesso = _context.Acessos.FirstOrDefault(acesso => acesso.IdDeAcesso == idDeAcesso);
+        if (acesso == null) return NotFound();
+        _mapper.Map(acessoDto, acesso);
+        _context.SaveChanges();
+        return NoContent();
+
+    }
 }
 
 [ApiController]
@@ -78,6 +89,17 @@ public class RegistraPessoaController : ControllerBase
         var pes = _context.Pessoas.FirstOrDefault(pessoa => pessoa.Documento == documento);
         if (pes == null) return NotFound();
         return Ok(pes);
+
+    }
+
+    [HttpPut("{Documento}")]
+    public IActionResult AtualizaPessoa(string Documento, [FromBody] UpdatePessoaDto pessoaDto)
+    {
+        var pessoa = _context.Pessoas.FirstOrDefault(pessoa => pessoa.Documento == Documento);
+        if (pessoa == null) return NotFound();
+        _mapper.Map(pessoaDto, pessoa);
+        _context.SaveChanges();
+        return NoContent();
 
     }
 }
