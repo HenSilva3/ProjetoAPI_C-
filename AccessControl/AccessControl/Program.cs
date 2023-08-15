@@ -1,4 +1,15 @@
+using AccessControl.Data;
+using Microsoft.EntityFrameworkCore;
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+var conenectionString = builder.Configuration.GetConnectionString("AcessosConnection");
+
+builder.Services.AddDbContext<ControleAcessoContex>(opts => opts.UseMySql(conenectionString,
+    ServerVersion.AutoDetect(conenectionString)));
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Add services to the container.
 
