@@ -93,7 +93,7 @@ public class RegistraPessoaController : ControllerBase
     public IEnumerable<ReadPessoaDto> RetornaAcessos([FromQuery] int skip = 0, [FromQuery] int take = 50)
     {
         return _mapper.Map<List<ReadPessoaDto>>(_context.Pessoas.Skip(skip).Take(take));
-    }
+    } 
 
     [HttpGet("RecuperaPessoaPorDocumento/{documento}")]
     public IActionResult RecuperaPessoaPorDocumento(string documento)
