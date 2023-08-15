@@ -1,4 +1,6 @@
-﻿using AccessControl.Data;
+﻿using AutoMapper;
+using AccessControl.Data;
+using AccessControl.Dtos;
 using AccessControl.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,19 +9,21 @@ namespace AccessControl.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class RegistroAcessoController : ControllerBase
+public class RegistraAcessoController : ControllerBase
 {
     private ControleAcessoContex _context;
+    private IMapper _mapper;
 
-    public RegistroAcessoController(ControleAcessoContex context)
+    public RegistraAcessoController(ControleAcessoContex context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     [HttpPost]
-    public IActionResult RegistraEntrada(Acesso acesso)
+    public IActionResult RegistraEntrada([FromBody] CreateAcessoDto acessoDto)
     {
-        
+        Acesso acesso = _mapper.Map<Acesso>(acessoDto);
         _context.Acessos.Add(acesso);
         _context.SaveChanges();
         return CreatedAtAction(nameof(RecuperaAcessoPorDocumento), new { documento = acesso.Documento }, acesso);
@@ -42,19 +46,21 @@ public class RegistroAcessoController : ControllerBase
 
 [ApiController]
 [Route("[controller]")]
-public class RegistroPessoaController : ControllerBase
+public class RegistraPessoaController : ControllerBase
 {
     private ControleAcessoContex _context;
+    private IMapper _mapper;
 
-    public RegistroPessoaController(ControleAcessoContex contex)
+    public RegistraPessoaController(ControleAcessoContex contex, IMapper mapper)
     {
         _context = contex;
+        _mapper = mapper;
     }
 
     [HttpPost]
-    public IActionResult RegistraPessoa(Pessoa pessoa)
+    public IActionResult RegistraPessoa([FromBody] CreatePessoaDto pessoaDto)
     {
-
+        Pessoa pessoa = _mapper.Map<Pessoa>(pessoaDto);
         _context.Pessoas.Add(pessoa);
         _context.SaveChanges();
         return CreatedAtAction(nameof(RecuperaPessoaPorDocumento), new { documento = pessoa.Documento }, pessoa);

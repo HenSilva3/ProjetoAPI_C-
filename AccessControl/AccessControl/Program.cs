@@ -9,6 +9,8 @@ var conenectionString = builder.Configuration.GetConnectionString("AcessosConnec
 builder.Services.AddDbContext<ControleAcessoContex>(opts => opts.UseMySql(conenectionString,
     ServerVersion.AutoDetect(conenectionString)));
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 // Add services to the container.
 
 builder.Services.AddControllers();
