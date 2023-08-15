@@ -30,20 +30,20 @@ public class RegistraAcessoController : ControllerBase
 
     }
 
-    [HttpGet]
-    public IEnumerable<Acesso> RetornaAcessos([FromQuery] int skip = 0, [FromQuery] int take = 50)
+    [HttpGet("RetornaAcessos")]
+    public IEnumerable<ReadAcessoDto> RetornaAcessos([FromQuery] int skip = 0, [FromQuery] int take = 50)
     {
-        return _context.Acessos.Skip(skip).Take(take);
+        return _mapper.Map<List<ReadAcessoDto>>(_context.Acessos.Skip(skip).Take(take));
     }
 
-    [HttpGet("{documento}")]
-    public IEnumerable<Acesso> RecuperaAcessoPorDocumento(string documento)
+    [HttpGet("RecuperaAcessoPorDocumento/{documento}")]
+    public IEnumerable<ReadAcessoDto> RecuperaAcessoPorDocumento(string documento)
     {
-        return _context.Acessos.Where(acesso => acesso.Documento == documento);
+        return _mapper.Map<List<ReadAcessoDto>>(_context.Acessos.Where(acesso => acesso.Documento == documento));
 
     }
 
-    [HttpPut("{idDeAcesso}")]
+    [HttpPut("AtualizaAcesso/{idDeAcesso}")]
     public IActionResult AtualizaAcesso(int idDeAcesso, [FromBody] UpdateAcessoDto acessoDto)
     {
         var acesso = _context.Acessos.FirstOrDefault(acesso => acesso.IdDeAcesso == idDeAcesso);
@@ -51,9 +51,21 @@ public class RegistraAcessoController : ControllerBase
         _mapper.Map(acessoDto, acesso);
         _context.SaveChanges();
         return NoContent();
-
     }
+
+    [HttpDelete("DeletaAcesso/{idDeAcesso}")]
+    public IActionResult DeletaAcesso(int idDeAcesso)
+    {
+        var acesso = _context.Acessos.FirstOrDefault(acesso => acesso.IdDeAcesso == idDeAcesso);
+        if (acesso == null) return NotFound();
+        _context.Remove(acesso);
+        _context.SaveChanges();
+        return NoContent();
+    }
+
+
 }
+
 
 [ApiController]
 [Route("[controller]")]
@@ -77,13 +89,13 @@ public class RegistraPessoaController : ControllerBase
         return CreatedAtAction(nameof(RecuperaPessoaPorDocumento), new { documento = pessoa.Documento }, pessoa);
     }
 
-    [HttpGet]
+    [HttpGet("RetornaAcessos")]
     public IEnumerable<Pessoa> RetornaAcessos([FromQuery] int skip = 0, [FromQuery] int take = 50)
     {
         return _context.Pessoas.Skip(skip).Take(take);
     }
 
-    [HttpGet("{documento}")]
+    [HttpGet("RecuperaPessoaPorDocumento/{documento}")]
     public IActionResult RecuperaPessoaPorDocumento(string documento)
     {
         var pes = _context.Pessoas.FirstOrDefault(pessoa => pessoa.Documento == documento);
@@ -92,7 +104,7 @@ public class RegistraPessoaController : ControllerBase
 
     }
 
-    [HttpPut("{Documento}")]
+    [HttpPut("AtualizaPessoa/{Documento}")]
     public IActionResult AtualizaPessoa(string Documento, [FromBody] UpdatePessoaDto pessoaDto)
     {
         var pessoa = _context.Pessoas.FirstOrDefault(pessoa => pessoa.Documento == Documento);
