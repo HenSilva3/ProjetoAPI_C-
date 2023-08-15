@@ -14,5 +14,6 @@ public class ControleAcessoProfile : Profile
         CreateMap<Acesso, ReadAcessoDto>();
         CreateMap<CreatePessoaDto, Pessoa>();
         CreateMap<UpdatePessoaDto, Pessoa>();
+        CreateMap<Pessoa, ReadPessoaDto>();
     }
 }

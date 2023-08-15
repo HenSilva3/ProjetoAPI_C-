@@ -89,18 +89,19 @@ public class RegistraPessoaController : ControllerBase
         return CreatedAtAction(nameof(RecuperaPessoaPorDocumento), new { documento = pessoa.Documento }, pessoa);
     }
 
-    [HttpGet("RetornaAcessos")]
-    public IEnumerable<Pessoa> RetornaAcessos([FromQuery] int skip = 0, [FromQuery] int take = 50)
+    [HttpGet("RetornaPessoas")]
+    public IEnumerable<ReadPessoaDto> RetornaAcessos([FromQuery] int skip = 0, [FromQuery] int take = 50)
     {
-        return _context.Pessoas.Skip(skip).Take(take);
+        return _mapper.Map<List<ReadPessoaDto>>(_context.Pessoas.Skip(skip).Take(take));
     }
 
     [HttpGet("RecuperaPessoaPorDocumento/{documento}")]
     public IActionResult RecuperaPessoaPorDocumento(string documento)
     {
-        var pes = _context.Pessoas.FirstOrDefault(pessoa => pessoa.Documento == documento);
-        if (pes == null) return NotFound();
-        return Ok(pes);
+        var pessoa = _context.Pessoas.FirstOrDefault(pessoa => pessoa.Documento == documento);
+        if (pessoa == null) return NotFound();
+        var pessoaDto = _mapper.Map<ReadPessoaDto>(pessoa);
+        return Ok(pessoaDto);
 
     }
 
@@ -110,6 +111,17 @@ public class RegistraPessoaController : ControllerBase
         var pessoa = _context.Pessoas.FirstOrDefault(pessoa => pessoa.Documento == Documento);
         if (pessoa == null) return NotFound();
         _mapper.Map(pessoaDto, pessoa);
+        _context.SaveChanges();
+        return NoContent();
+
+    }
+
+    [HttpDelete("DeletaPessoa/{Documento}")]
+    public IActionResult DeletaPessoa(string Documento)
+    {
+        var pessoa = _context.Pessoas.FirstOrDefault(pessoa => pessoa.Documento == Documento);
+        if (pessoa == null) return NotFound();
+        _context.Remove(pessoa);
         _context.SaveChanges();
         return NoContent();
 
