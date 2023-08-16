@@ -54,3 +54,5 @@ C:\Users\user\source\repos\ProjetoAPI_C-\AccessControl\AccessControl\bin\Debug\n
 C:\Users\user\source\repos\ProjetoAPI_C-\AccessControl\AccessControl\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 C:\Users\user\source\repos\ProjetoAPI_C-\AccessControl\AccessControl\bin\Debug\net6.0\AutoMapper.dll
 C:\Users\user\source\repos\ProjetoAPI_C-\AccessControl\AccessControl\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\user\source\repos\ProjetoAPI_C-\AccessControl\AccessControl\bin\Debug\net6.0\AccessControl.xml
+C:\Users\user\source\repos\ProjetoAPI_C-\AccessControl\AccessControl\obj\Debug\net6.0\AccessControl.xml

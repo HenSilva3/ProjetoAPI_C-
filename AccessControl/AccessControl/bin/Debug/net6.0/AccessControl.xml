@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AccessControl</name>
+    </assembly>
+    <members>
+        <member name="M:AccessControl.Controllers.RegistraAcessoController.RegistraEntrada(AccessControl.Dtos.CreateAcessoDto)">
+            <summary>
+            Adiciona um acesso ao banco de dados
+            </summary>
+            <param name="acessoDto">Objeto com os campos necessários para criação de um acesso</param>
+            <returns>IActionResult</returns>
+            <response code="201">Caso inserção seja feita com sucesso</response>
+        </member>
+        <member name="M:AccessControl.Controllers.RegistraAcessoController.RetornaAcessos(System.Int32,System.Int32)">
+            <summary>
+            Retorna os acessos realizados
+            </summary>    
+            <returns>IActionResult</returns>
+            <response code="200">Caso haja registros no banco de dados</response>
+        </member>
+        <member name="M:AccessControl.Controllers.RegistraAcessoController.RecuperaAcessoPorDocumento(System.String)">
+            <summary>
+            Retorna os acessos realizados por uma determinada pessoa
+            </summary>    
+            <returns>IActionResult</returns>
+            <response code="200">Caso haja registros no banco de dados</response>
+        </member>
+        <member name="M:AccessControl.Controllers.RegistraAcessoController.AtualizaAcesso(System.Int32,AccessControl.Dtos.UpdateAcessoDto)">
+            <summary>
+            Atualiza os dados do acesso utilizando o id 
+            </summary>    
+            <returns>IActionResult</returns>
+            <response code="204">Caso o acesso seja atualizado no banco de dados</response>
+        </member>
+        <member name="M:AccessControl.Controllers.RegistraAcessoController.DeletaAcesso(System.Int32)">
+            <summary>
+            Deleta o acesso do banco de dados
+            </summary>    
+            <returns>IActionResult</returns>
+            <response code="204">Caso o acesso seja deletado no banco de dados</response>
+        </member>
+        <member name="M:AccessControl.Controllers.RegistraPessoaController.RegistraPessoa(AccessControl.Dtos.CreatePessoaDto)">
+            <summary>
+            Adiciona um registro ao banco de dados
+            </summary>
+            <param name="pessoaDto">Objeto com os campos necessários para criação de um registro</param>
+            <returns>IActionResult</returns>
+            <response code="201">Caso inserção seja feita com sucesso</response>
+        </member>
+        <member name="M:AccessControl.Controllers.RegistraPessoaController.RetornaAcessos(System.Int32,System.Int32)">
+            <summary>
+            Retorna pessoas registradas
+            </summary>    
+            <returns>IActionResult</returns>
+            <response code="200">Caso haja registros no banco de dados</response>
+        </member>
+        <member name="M:AccessControl.Controllers.RegistraPessoaController.RecuperaPessoaPorDocumento(System.String)">
+            <summary>
+            Retorna os registors de uma determinada pessoa
+            </summary>    
+            <returns>IActionResult</returns>
+            <response code="200">Caso haja registros no banco de dados</response>
+        </member>
+        <member name="M:AccessControl.Controllers.RegistraPessoaController.AtualizaPessoa(System.String,AccessControl.Dtos.UpdatePessoaDto)">
+            <summary>
+            Atualiza os dados de uma pessoa 
+            </summary>    
+            <returns>IActionResult</returns>
+            <response code="204">Caso o dado seja atualizado no banco de dados</response>
+        </member>
+        <member name="M:AccessControl.Controllers.RegistraPessoaController.DeletaPessoa(System.String)">
+            <summary>
+            Deleta o registro de uma pessoa do banco de dados
+            </summary>    
+            <returns>IActionResult</returns>
+            <response code="204">Caso o registro seja deletado no banco de dados</response>
+        </member>
+        <member name="T:AccessControl.Migrations.CriandoTabeladeAcessos">
+            <inheritdoc />
+        </member>
+        <member name="M:AccessControl.Migrations.CriandoTabeladeAcessos.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:AccessControl.Migrations.CriandoTabeladeAcessos.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:AccessControl.Migrations.CriandoTabeladeAcessos.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

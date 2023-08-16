@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AccessControl.Controllers;
 
+
 [ApiController]
 [Route("[controller]")]
 public class RegistraAcessoController : ControllerBase
@@ -20,7 +21,14 @@ public class RegistraAcessoController : ControllerBase
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Adiciona um acesso ao banco de dados
+    /// </summary>
+    /// <param name="acessoDto">Objeto com os campos necessários para criação de um acesso</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="201">Caso inserção seja feita com sucesso</response>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public IActionResult RegistraEntrada([FromBody] CreateAcessoDto acessoDto)
     {
         Acesso acesso = _mapper.Map<Acesso>(acessoDto);
@@ -30,20 +38,38 @@ public class RegistraAcessoController : ControllerBase
 
     }
 
+    /// <summary>
+    /// Retorna os acessos realizados
+    /// </summary>    
+    /// <returns>IActionResult</returns>
+    /// <response code="200">Caso haja registros no banco de dados</response>
     [HttpGet("RetornaAcessos")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public IEnumerable<ReadAcessoDto> RetornaAcessos([FromQuery] int skip = 0, [FromQuery] int take = 50)
     {
         return _mapper.Map<List<ReadAcessoDto>>(_context.Acessos.Skip(skip).Take(take));
     }
 
+    /// <summary>
+    /// Retorna os acessos realizados por uma determinada pessoa
+    /// </summary>    
+    /// <returns>IActionResult</returns>
+    /// <response code="200">Caso haja registros no banco de dados</response>
     [HttpGet("RecuperaAcessoPorDocumento/{documento}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public IEnumerable<ReadAcessoDto> RecuperaAcessoPorDocumento(string documento)
     {
         return _mapper.Map<List<ReadAcessoDto>>(_context.Acessos.Where(acesso => acesso.Documento == documento));
 
     }
 
+    /// <summary>
+    /// Atualiza os dados do acesso utilizando o id 
+    /// </summary>    
+    /// <returns>IActionResult</returns>
+    /// <response code="204">Caso o acesso seja atualizado no banco de dados</response>
     [HttpPut("AtualizaAcesso/{idDeAcesso}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public IActionResult AtualizaAcesso(int idDeAcesso, [FromBody] UpdateAcessoDto acessoDto)
     {
         var acesso = _context.Acessos.FirstOrDefault(acesso => acesso.IdDeAcesso == idDeAcesso);
@@ -53,7 +79,13 @@ public class RegistraAcessoController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Deleta o acesso do banco de dados
+    /// </summary>    
+    /// <returns>IActionResult</returns>
+    /// <response code="204">Caso o acesso seja deletado no banco de dados</response>
     [HttpDelete("DeletaAcesso/{idDeAcesso}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public IActionResult DeletaAcesso(int idDeAcesso)
     {
         var acesso = _context.Acessos.FirstOrDefault(acesso => acesso.IdDeAcesso == idDeAcesso);
@@ -80,7 +112,14 @@ public class RegistraPessoaController : ControllerBase
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Adiciona um registro ao banco de dados
+    /// </summary>
+    /// <param name="pessoaDto">Objeto com os campos necessários para criação de um registro</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="201">Caso inserção seja feita com sucesso</response>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public IActionResult RegistraPessoa([FromBody] CreatePessoaDto pessoaDto)
     {
         Pessoa pessoa = _mapper.Map<Pessoa>(pessoaDto);
@@ -89,13 +128,25 @@ public class RegistraPessoaController : ControllerBase
         return CreatedAtAction(nameof(RecuperaPessoaPorDocumento), new { documento = pessoa.Documento }, pessoa);
     }
 
+    /// <summary>
+    /// Retorna pessoas registradas
+    /// </summary>    
+    /// <returns>IActionResult</returns>
+    /// <response code="200">Caso haja registros no banco de dados</response>
     [HttpGet("RetornaPessoas")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public IEnumerable<ReadPessoaDto> RetornaAcessos([FromQuery] int skip = 0, [FromQuery] int take = 50)
     {
         return _mapper.Map<List<ReadPessoaDto>>(_context.Pessoas.Skip(skip).Take(take));
-    } 
+    }
 
+    /// <summary>
+    /// Retorna os registors de uma determinada pessoa
+    /// </summary>    
+    /// <returns>IActionResult</returns>
+    /// <response code="200">Caso haja registros no banco de dados</response>
     [HttpGet("RecuperaPessoaPorDocumento/{documento}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public IActionResult RecuperaPessoaPorDocumento(string documento)
     {
         var pessoa = _context.Pessoas.FirstOrDefault(pessoa => pessoa.Documento == documento);
@@ -105,7 +156,13 @@ public class RegistraPessoaController : ControllerBase
 
     }
 
+    /// <summary>
+    /// Atualiza os dados de uma pessoa 
+    /// </summary>    
+    /// <returns>IActionResult</returns>
+    /// <response code="204">Caso o dado seja atualizado no banco de dados</response>
     [HttpPut("AtualizaPessoa/{Documento}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public IActionResult AtualizaPessoa(string Documento, [FromBody] UpdatePessoaDto pessoaDto)
     {
         var pessoa = _context.Pessoas.FirstOrDefault(pessoa => pessoa.Documento == Documento);
@@ -116,7 +173,13 @@ public class RegistraPessoaController : ControllerBase
 
     }
 
+    /// <summary>
+    /// Deleta o registro de uma pessoa do banco de dados
+    /// </summary>    
+    /// <returns>IActionResult</returns>
+    /// <response code="204">Caso o registro seja deletado no banco de dados</response>
     [HttpDelete("DeletaPessoa/{Documento}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public IActionResult DeletaPessoa(string Documento)
     {
         var pessoa = _context.Pessoas.FirstOrDefault(pessoa => pessoa.Documento == Documento);
