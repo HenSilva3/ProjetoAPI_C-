@@ -37,7 +37,8 @@
 
 ## Layout da Aplicação :dash:
 
-> ![Imagen do Swagger da API](https://github.com/HenSilva3/ProjetoAPI_C-/assets/139809573/5d204d71-9af1-4f10-828b-dcceec2e71e0)
+> ![API](https://github.com/HenSilva3/ProjetoAPI_C-/assets/139809573/51dd7f6c-a3fb-4991-92ea-4d380decdf2f)
+
 
 ## Pré-requisitos
 
